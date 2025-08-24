@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Image</title>
+    <link rel="stylesheet" href="Dogs.css">
+
+</head>
+
+<body>
+
+<div class="container">
+<div class="dog-img-outer-container">
+    <img class="dog-img" src="" alt="">
+</div>
+
+<h2>Breed:</h2>
+<button onclick="Chnage()">Click</button>
+</div>
+
+
+
+    <script>
+
+function Chnage(){
+
+fetch("https://dog.ceo/api/breeds/image/random")
+.then((res)=>{
+    return res.json();
+})
+.then((data)=>{
+    console.log(data)
+    let name=data.message.split("/");
+    let nameget=name[4];
+    // https://images.dog.ceo/breeds/hound-afghan/n02088094_1003.jpg
+// When .split("/") sees //, it treats it like “something / nothing / something”.
+// So between those two slashes, it inserts an empty string "" into the array.
+    //     [
+//   "https:",          // index 0
+//   "",                // index 1  <-- this is the one you asked about
+//   "images.dog.ceo",  // index 2
+//   "breeds",          // index 3
+//   "hound-afghan",    // index 4
+//   "n02088094_1003.jpg" // index 5
+// ]
+
+    document.querySelector("h2").innerHTML=`${nameget}`;
+    document.querySelector(".dog-img").src=data.message
+})
+.catch((err)=>{
+    console.log(err)
+})
+}
+// Whenever window load the image is genrated
+window.onload=Chnage
+
+    </script>
+    
+
+
+</body>
+</html>
